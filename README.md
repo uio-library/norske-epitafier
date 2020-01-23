@@ -37,7 +37,7 @@ Felt | Innsnevring av | Etikett | Beskrivelse
 `:epitaphOn`  ||  `dc:subject` |   Epitafium over         | TODO
 `:biography`	|| Biografi |	TODO lage lokalt felt 
 `:diocese`      || Stift  | Historisk stift|
-`:location`    | `dcterms:spatial` ?   Nåværende plassering         | TODO
+`:location`    | `dcterms:spatial` ? |  Nåværende plassering | TODO
 `:originalLocation`    ||   Opprinnelig plassering         | TODO
 `:filelabel`    ||  File label         | TODO
 `:kunstner`    ||  Kunstner     | TODO
