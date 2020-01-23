@@ -29,12 +29,13 @@ Felt | Innsnevring av | Etikett | Beskrivelse
 `dc:language`    ||    Language
 `dc:publisher`    ||   Publisher
 `dc:relation`    ||    Relation
-`dc:rights`    ||    Rights
+`dc:rights`    ||    Rights | TODO - flere|
 `dc:source`    ||   Source
 `dc:subject`    ||    Subject
 `dc:title`    ||   Title
 `dc:type`    ||    Type
 `:epitaphOn`   ||  `dc:subject` ? |    Epitafium over         | TODO
+`:biografi`	|| |Biografi| TODO -lage lokalt felt|
 `:diocese`      || Stift  | Historisk stift|
 `:location`    | `dcterms:spatial` ?   Nåværende plassering         | TODO
 `:originalLocation`    ||   Opprinnelig plassering         | TODO
