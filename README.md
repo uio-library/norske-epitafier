@@ -16,17 +16,17 @@ Felter som er i bruk for denne samlingen (pr 17.01.2020):
 
 Felt | Innsnevring av | Etikett | Beskrivelse
 ---|---|---|---
-`dc:date`               || Dato            | TODO
-`dc:description`        || Beskrivelse     | TODO
+`dc:date` || Dato            | TODO
+`dc:description`|| Beskrivelse     | TODO
 `dcterms:bibliographicCitation` || Referanser  | TODO
-`dcterms:provenance`    || Proveniens        | TODO
-`dcterms:rightsHolder`  ||    Opphaver         | TODO
-`dc:contributor`    ||    Contributor
-`dc:coverage`    ||   Coverage
-`dc:creator`    ||    Creator
-`dc:format`    ||    Format
-`dc:identifier`    ||    Identifier
-`dc:language`    ||    Language
+`dcterms:provenance` || Proveniens        | TODO
+`dcterms:rightsHolder`||    Opphaver         | TODO
+`dc:contributor`||    Contributor
+`dc:coverage` ||   Coverage
+`dc:creator` ||    Creator
+`dc:format` ||    Format
+`dc:identifier` ||    Identifier
+`dc:language` ||    Language
 `dc:publisher`    ||   Publisher
 `dc:relation`    ||    Relation
 `dc:rights`    ||    Rights | TODO - flere|
@@ -34,7 +34,7 @@ Felt | Innsnevring av | Etikett | Beskrivelse
 `dc:subject`    ||    Subject
 `dc:title`    ||   Title
 `dc:type`    ||    Type
-`:epitaphOn`  ||  `dc:subject` |   Epitafium over         | TODO
+`:epitaphOn` |  `dc:subject` |   Epitafium over         | TODO
 `:biography`	|| Biografi |	TODO lage lokalt felt 
 `:diocese`      || Stift  | Historisk stift|
 `:location`    | `dcterms:spatial` ? |  Nåværende plassering | TODO
