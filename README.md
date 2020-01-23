@@ -35,12 +35,12 @@ Felt | Innsnevring av | Etikett | Beskrivelse
 `dc:title`    ||   Title
 `dc:type`    ||    Type
 `:epitaphOn`   ||  `dc:subject` ? |    Epitafium over         | TODO
-`:diocese`      || Stift  | TODO
+`:diocese`      || Stift  | Historisk stift|
 `:location`    | `dcterms:spatial` ?   Nåværende plassering         | TODO
 `:originalLocation`    ||   Opprinnelig plassering         | TODO
 `:filelabel`    ||  File label         | TODO
 `:kunstner`    ||  Kunstner     | TODO
-`:inscriptions`    ||  Innskrift     | TODO
+`:inscriptions`    ||  Innskrift     | Feltet inneholder alle innskrifter, samt overskrifter. Er html-formatert med avsnitt pga manglende formateringsmuligheter i visning |
 `:beskrivelse`    ||   Beskrivelse     | TODO
 `:merknader`    || Merknader     | TODO
 
