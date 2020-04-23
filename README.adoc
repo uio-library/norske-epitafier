@@ -108,10 +108,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 
 
 
-== Script
-
-avbildet: Eks. "Sogneprest med kone og barn"
-biografi: Biografi om hovedpersonen avbidlet i epitafium
+== Konvertering
 
 === Oppsett
 
