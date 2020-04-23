@@ -75,7 +75,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 [cols="35s,65", stripes=odd]
 |===
 |URI | :inscriptions
-|Beskrivelse | (Fylles inn)
+|Beskrivelse | Feltet inneholder alle innskrifter, samt overskrifter. Er html-formatert med avsnitt pga. manglende formateringsmuligheter i visning.
 |===
 
 === Merknader
