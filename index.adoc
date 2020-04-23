@@ -1,0 +1,146 @@
+= Norske epitafier
+
+Dette repoet inneholder data for «Norske epitafier» som XML-filer,
+samt script for å konvertere postene til Dublin Core og laste dem opp til Alma Digital.
+
+== Dublin Core applikasjonsprofil
+
+Definisjon av felter som brukes i xml-versjonen av katalogen, og hvilke felter disse skal korrespondere med i DC application profile 1 i UBOs katalog.
+
+Feltene i Alma Digital konfigureres i ExLibris Alma under `Alma Configuration > Resources > Cataloging > Metadata Configuration > DC application profile 1`
+
+Språkvalg for skjemaet:
+engelske felt/egenskaper og norske etiketter/labels. [utviklingsønske: etiketter på flere språk]
+
+Felter som er i bruk for denne samlingen (pr 23.04.2020):
+
+=== Epitafium over
+|===
+|URI | :epitaphOn
+|Beskrivelse | Person(er) avbildet på epitafiet. Eksempel: «Christen Jensen (Sorenskriver) og hustru Gye Lauridtzdatter, med barn»
+|===
+
+=== Stift
+|===
+|URI | :diocese
+|Beskrivelse | «Bergen», «Oslo/Christiania», «Stavanger» eller «Trondhjem»
+|===
+
+=== Opprinnelig plassering
+|===
+|URI | :originalLocation
+|Underegenskap av | dc:location
+|Beskrivelse | Kirke epitafiet opprinnelig var plassert i.
+|===
+
+=== Plassering
+[cols="35s,65", stripes=odd]
+|===
+|URI | :location
+|Underegenskap av | dc:location
+|Beskrivelse | Nåværende plassering, typisk navn på et museum eller en kirke
+|===
+
+
+=== Kunstner
+[cols="35s,65", stripes=odd]
+|===
+|URI | :artist
+|Underegenskap av | dc:creator
+|Beskrivelse | Person(er) som har fremstilt epitafiet. Ofte ukjent. Feltet kan ha komplekse verdier som «X har stått for utskjæringene, Y har malt bildet.» og «Antagelig utformet av X.»
+|===
+
+=== Dato
+[cols="35s,65", stripes=odd]
+|===
+|URI | dc:date
+|Beskrivelse | Datering (omtrentlig eller eksakt) for når epitafiet ble fremstilt. Omtrentlige verdier kan f.eks. ha formen «1590-tallet» og «ca. 1630».
+|===
+
+=== Beskrivelse (OBS: engelsk i dag)
+[cols="35s,65", stripes=odd]
+|===
+|URI | dc:description
+|Beskrivelse | Standardtekst som går igjen på alle epitafiene.
+|===
+
+=== Tittel
+[cols="35s,65", stripes=odd]
+|===
+|URI | dc:title
+|Beskrivelse | Standardtekst på formen «Norske epitafier : {katalognummer}»
+|===
+
+=== Inskripsjoner
+[cols="35s,65", stripes=odd]
+|===
+|URI | :inscriptions
+|Beskrivelse | (Fylles inn)
+|===
+
+=== Merknader
+[cols="35s,65", stripes=odd]
+|===
+|URI | :notes
+|Beskrivelse | (Fylles inn)
+|===
+
+=== Referanser
+[cols="35s,65", stripes=odd]
+|===
+|URI | dcterms:bibliographicCitation
+|Beskrivelse | Referanser til omtale av epitafiet.
+|===
+
+=== Rettigheter (OBS: engelsk i dag)
+[cols="35s,65", stripes=odd]
+|===
+|URI | dc:rights
+|Beskrivelse | (Ikke avklart helt enda. Vi har rettighetsinformasjon på både tekst og foto)
+|===
+
+=== Identifikator
+[cols="35s,65", stripes=odd]
+|===
+|URI | dc:identifier
+|Beskrivelse | Intern Alma-ID (MMS-ID). Bør helst ikke vises.
+|===
+
+
+
+== Script
+
+avbildet: Eks. "Sogneprest med kone og barn"
+biografi: Biografi om hovedpersonen avbidlet i epitafium
+
+=== Oppsett
+
+Hent inn avhengigheter med pipenv:
+
+	pipenv install
+
+Lag en `.env`-fil for hemmeligheter:
+
+	cp .env.dist .env
+
+og legg nøkler for Alma og S3 her.
+
+=== Konvertere
+
+For å konvertere poster fra lokalt XML-format til Dublin Core:
+
+	pipenv -m scripts.convert
+
+=== Laste opp
+
+For å laste opp til Alma:
+
+	pipenv -m scripts.upload
+
+=== Synkronisere ID-er
+
+Når postene har blitt importert i Alma bør man hente ned ID-ene som har blitt generert for postene:
+
+	pipenv -m scripts.fetch_ids
+
+Disse lagres i fila `alma_ids.json`.
