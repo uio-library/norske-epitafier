@@ -23,7 +23,7 @@ def main():
 
     for source_xml_file in Path(settings.src_dir).rglob('metadata.xml'):
         record = convert_record(
-            str(settings.source_xml_file),
+            str(source_xml_file),
             settings.xsl_file,
             settings.alma_ids_file
         )

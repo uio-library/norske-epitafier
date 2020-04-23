@@ -1,0 +1,37 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="epitafium">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="katalognummer"/>
+        <xs:element type="xs:string" name="avbildet"/>
+        <xs:element type="xs:string" name="datering"/>
+        <xs:element type="xs:string" name="skaper"/>
+        <xs:element type="xs:string" name="stift"/>
+        <xs:element type="xs:string" name="opprinnelig_plassering"/>
+        <xs:element type="xs:string" name="plassering"/>
+        <xs:element type="xs:string" name="merknader"/>
+        <xs:element name="innskrift" maxOccurs="unbounded" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="plassering" maxOccurs="1"/>
+              <xs:element type="xs:string" name="original" maxOccurs="1"/>
+              <xs:element type="xs:string" name="oversettelse" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element type="xs:string" name="referanse" minOccurs="0" />
+        <xs:element name="fil" maxOccurs="unbounded" minOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="filnavn" maxOccurs="1"/>
+              <xs:element type="xs:string" name="visningsnavn" minOccurs="0" maxOccurs="1"/>
+              <xs:element type="xs:string" name="kreditering" maxOccurs="1"/>
+              <xs:element type="xs:string" name="lisens" maxOccurs="1"/>
+              <xs:element type="xs:string" name="dato" maxOccurs="1"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

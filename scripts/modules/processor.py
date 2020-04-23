@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from collections import OrderedDict
-from lxml.etree import parse, tostring, XSLT, Element, FunctionNamespace
+from lxml.etree import parse, tostring, XSLT, Element, FunctionNamespace, XMLParser, XMLSchema
 import json
 
 
@@ -16,12 +16,24 @@ def trim(context, values):
 
 @ns
 def tohtml(context, values):
-    values = [x.text for x in values]
+    values = [x.text for x in values if x.text is not None]
     return ''.join(values).strip().replace('\n', '<br>')
 
 
 def convert_record(filename: str, xsl_filename: str, alma_ids_filename: str):
+    # print(filename)
     source_doc = parse(filename)
+
+    schema_doc = parse('epitafium.xsd')
+    schema = XMLSchema(schema_doc)
+    if schema.validate(source_doc):
+        pass
+        # print("VALID!")
+    else:
+        for err in schema.error_log:
+            print(err)
+        # log = schema.error_log
+
     catalog_number = source_doc.find('katalognummer').text
 
     with open(alma_ids_filename, 'r', encoding='utf-8') as fp:
