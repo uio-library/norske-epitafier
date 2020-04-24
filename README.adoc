@@ -17,19 +17,19 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 === Epitafium over
 |===
 |URI | :epitaphOn
-|Beskrivelse | Person(er) avbildet på epitafiet. Eksempel: «Christen Jensen (Sorenskriver) og hustru Gye Lauridtzdatter, med barn»
+|Beskrivelse | Person(er) som epitafiet er til minne for. Eksempel: «Christen Jensen (Sorenskriver) og hustru Gye Lauridtzdatter, med barn»
 |===
 
 === Stift
 |===
 |URI | :diocese
-|Beskrivelse | «Bergen», «Oslo/Christiania», «Stavanger» eller «Trondhjem»
+|Beskrivelse | Historisk stift, slik de så ut rundt ca. 1700. Fire mulige verdier: «Bergen», «Oslo/Christiania», «Stavanger» eller «Trondhjem».
 |===
 
 === Opprinnelig plassering
 |===
 |URI | :originalLocation
-|Underegenskap av | dc:location
+|Underegenskap av | dc:spatial
 |Beskrivelse | Kirke epitafiet opprinnelig var plassert i.
 |===
 
@@ -37,7 +37,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 [cols="35s,65", stripes=odd]
 |===
 |URI | :location
-|Underegenskap av | dc:location
+|Underegenskap av | dc:spatial
 |Beskrivelse | Nåværende plassering, typisk navn på et museum eller en kirke
 |===
 
