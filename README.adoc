@@ -17,7 +17,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 === Epitafium over
 |===
 |URI | :epitaphOn
-|Beskrivelse | Person(er) som epitafiet er til minne for. Eksempel: «Christen Jensen (Sorenskriver) og hustru Gye Lauridtzdatter, med barn»
+|Beskrivelse | Person(er) som epitafiet er til minne over. Eksempel: «Christen Jensen (Sorenskriver) og hustru Gye Lauridtzdatter, med barn»
 |===
 
 === Stift
