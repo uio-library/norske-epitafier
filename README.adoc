@@ -61,7 +61,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 [cols="35s,65", stripes=odd]
 |===
 |URI | dc:description
-|Beskrivelse | Standardtekst som går igjen på alle epitafiene.
+|Beskrivelse | Fysisk beskrivelse av epitafiet. Eks: ...
 |===
 
 === Tittel
@@ -97,6 +97,13 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |===
 |URI | dc:rights
 |Beskrivelse | (Ikke avklart helt enda. Vi har rettighetsinformasjon på både tekst og foto)
+|===
+
+=== Kilde???
+[cols="35s,65", stripes=odd]
+|===
+|URI | dcterms:source
+|Beskrivelse | Standardtekst som går igjen på alle epitafiene. Eksempel: ..
 |===
 
 === Identifikator
