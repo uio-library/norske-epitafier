@@ -11,50 +11,35 @@
         <dc:identifier>alma:47BIBSYS_UBO/bibs/<xsl:value-of select="mms_id"/></dc:identifier>
       </xsl:if>
 
-      <epitaphOn xml:lang="nob">
-        <xsl:value-of select="avbildet"/>
-      </epitaphOn>
+      <catalogCode><xsl:value-of select="katalognummer"/></catalogCode>
 
-      <diocese xml:lang="nob">
-        <xsl:value-of select="stift"/>
-      </diocese>
+      <epitaphOn xml:lang="nob"><xsl:value-of select="avbildet"/></epitaphOn>
 
-      <originalLocation xml:lang="nob">
-        <xsl:value-of select="opprinnelig_plassering"/>
-      </originalLocation>
+      <diocese xml:lang="nob"><xsl:value-of select="stift"/></diocese>
 
-      <location xml:lang="nob">
-        <xsl:value-of select="plassering"/>
-      </location>
+      <originalLocation xml:lang="nob"><xsl:value-of select="opprinnelig_plassering/navn"/></originalLocation>
 
-      <dc:creator xml:lang="nob">
-        <xsl:value-of select="skaper"/>
-      </dc:creator>
+      <location xml:lang="nob"><xsl:value-of select="plassering/navn"/></location>
 
-      <dc:date>
-        <xsl:value-of select="datering"/>
-      </dc:date>
+      <dc:creator xml:lang="nob"><xsl:value-of select="skaper"/></dc:creator>
 
-      <dc:title xml:lang="nob">
-        Norske epitafier : <xsl:value-of select="katalognummer"/> [test versjon 2020-04-23]
-      </dc:title>
+      <dc:date><xsl:value-of select="datering"/></dc:date>
 
-      <notes>
-        <xsl:value-of select="merknader"/>
-      </notes>
+      <dc:title xml:lang="nob">Norske epitafier 1550–1700: Epitafium over <xsl:value-of select="avbildet"/> [TEST @ 2020-05-05]</dc:title>
+
+      <dcterms:description xml:lang="nob"><xsl:value-of select="py:tohtml(beskrivelse)"/></dcterms:description>
+
+      <notes><xsl:value-of select="merknader"/></notes>
 
       <inscriptions xml:lang="nob">
-        <xsl:for-each select="innskrift">
-          <p>
-            <b><xsl:value-of select="plassering"/>:</b>
+        <xsl:for-each select="innskrift">&lt;b&gt;<xsl:value-of select="plassering"/>:&lt;/b&gt;
             <xsl:text> </xsl:text><!-- explicit space -->
             <xsl:value-of select="py:tohtml(original)"/>
-
             <xsl:if test="oversettelse != ''">
-              <b>Oversettelse: </b>
+              &lt;br&gt;&lt;b&gt;Oversettelse: &lt;/b&gt;
               <xsl:value-of select="py:tohtml(oversettelse)"/>
             </xsl:if>
-          </p>
+            &lt;br&gt;&lt;br&gt;
         </xsl:for-each>
       </inscriptions>
 
@@ -64,19 +49,24 @@
         </dcterms:bibliographicCitation>
       </xsl:for-each>
 
-      <dcterms:description xml:lang="nob">
-        [forslag til tekst] Dokumentasjon av epitafier i Norge, gjennomført av Teologisk fakultet.
+      <dc:source xml:lang="nob">[forslag til tekst] Dokumentasjon av epitafier i Norge, gjennomført av Teologisk fakultet.
         Nummer i tittel er katalognummeret i prosjektkatalogen utarbeidet ved TF.
-        &lt;a href=&quot;https://www.tf.uio.no/forskning/prosjekter/norske-epitafier&quot;&gt;Om samlingen&lt;/a&gt;.
-      </dcterms:description>
+        &lt;a href=&quot;https://www.tf.uio.no/forskning/prosjekter/norske-epitafier&quot;&gt;Om samlingen&lt;/a&gt;.</dc:source>
 
-      <dc:rights xml:lang="nob">
-        Lisens knyttet til bruk [...]
+      <dc:rights xml:lang="nob">&lt;p&gt;[Generell tekst].&lt;/p&gt;
+        &lt;p&gt;Kreditering for bilder:
+        <xsl:for-each select="fil">
+          <xsl:value-of select="filnavn"/>: <xsl:value-of select="kreditering"/>
+          &lt;br&gt;
+        </xsl:for-each>
+        &lt;/p&gt;
       </dc:rights>
 
       <xsl:for-each select="fil">
         <dc:identifier>file://<xsl:value-of select="filnavn"/></dc:identifier>
       </xsl:for-each>
+
+      <dc:identifier><xsl:value-of select="katalognummer"/></dc:identifier>
 
     </record>
   </xsl:template>
