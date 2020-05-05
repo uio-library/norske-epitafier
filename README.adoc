@@ -14,23 +14,24 @@ engelske felt/egenskaper og norske etiketter/labels. [utviklingsønske: etikette
 
 Felter som er i bruk for denne samlingen (pr 23.04.2020):
 
-=== Epitafium over
+=== Tittel
+[cols="35s,65", stripes=odd]
+|===
+|URI | dc:title
+|Beskrivelse | Generert standardtekst på formen «Norske epitafier 1550–1700: Epitafium over N»
+|===
+
+=== Epitafium over (skjult fordi feltet inngår i tittel)
 |===
 |URI | :epitaphOn
 |Beskrivelse | Person(er) som epitafiet er til minne over. Eksempel: «Christen Jensen (Sorenskriver) og hustru Gye Lauridtzdatter, med barn»
 |===
 
-=== Stift
+=== Dato
+[cols="35s,65", stripes=odd]
 |===
-|URI | :diocese
-|Beskrivelse | Historisk stift, slik de så ut rundt ca. 1700. Fire mulige verdier: «Bergen», «Oslo/Christiania», «Stavanger» eller «Trondhjem».
-|===
-
-=== Opprinnelig plassering
-|===
-|URI | :originalLocation
-|Underegenskap av | dc:spatial
-|Beskrivelse | Kirke epitafiet opprinnelig var plassert i.
+|URI | dc:date
+|Beskrivelse | Datering (omtrentlig eller eksakt) for når epitafiet ble fremstilt. Omtrentlige verdier kan f.eks. ha formen «1590-tallet» og «ca. 1630».
 |===
 
 === Plassering
@@ -41,6 +42,18 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |Beskrivelse | Nåværende plassering, typisk navn på et museum eller en kirke
 |===
 
+=== Opprinnelig plassering
+|===
+|URI | :originalLocation
+|Underegenskap av | dc:spatial
+|Beskrivelse | Kirke epitafiet opprinnelig var plassert i.
+|===
+
+=== Stift
+|===
+|URI | :diocese
+|Beskrivelse | Historisk stift, slik de så ut rundt ca. 1700. Fire mulige verdier: «Bergen», «Oslo/Christiania», «Stavanger» eller «Trondhjem».
+|===
 
 === Kunstner
 [cols="35s,65", stripes=odd]
@@ -50,28 +63,14 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |Beskrivelse | Person(er) som har fremstilt epitafiet. Ofte ukjent. Feltet kan ha komplekse verdier som «X har stått for utskjæringene, Y har malt bildet.» og «Antagelig utformet av X.»
 |===
 
-=== Dato
-[cols="35s,65", stripes=odd]
-|===
-|URI | dc:date
-|Beskrivelse | Datering (omtrentlig eller eksakt) for når epitafiet ble fremstilt. Omtrentlige verdier kan f.eks. ha formen «1590-tallet» og «ca. 1630».
-|===
-
-=== Beskrivelse (OBS: engelsk i dag)
+=== Beskrivelse
 [cols="35s,65", stripes=odd]
 |===
 |URI | dc:description
 |Beskrivelse | Fysisk beskrivelse av epitafiet. Eks: ...
 |===
 
-=== Tittel
-[cols="35s,65", stripes=odd]
-|===
-|URI | dc:title
-|Beskrivelse | Standardtekst på formen «Norske epitafier : {katalognummer}»
-|===
-
-=== Inskripsjoner
+=== Innskrifter
 [cols="35s,65", stripes=odd]
 |===
 |URI | :inscriptions
@@ -92,25 +91,32 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |Beskrivelse | Referanser til omtale av epitafiet.
 |===
 
-=== Rettigheter (OBS: engelsk i dag)
+=== Rettigheter (?)
 [cols="35s,65", stripes=odd]
 |===
 |URI | dc:rights
 |Beskrivelse | (Ikke avklart helt enda. Vi har rettighetsinformasjon på både tekst og foto)
 |===
 
-=== Kilde???
+=== Kilde (?)
 [cols="35s,65", stripes=odd]
 |===
 |URI | dcterms:source
 |Beskrivelse | Standardtekst som går igjen på alle epitafiene. Eksempel: ..
 |===
 
-=== Identifikator
+=== Katalogkode
+|===
+|URI | :catalogCode
+|Underegenskap av | dc:identifier
+|Beskrivelse |
+|===
+
+=== Identifikator (skjult)
 [cols="35s,65", stripes=odd]
 |===
 |URI | dc:identifier
-|Beskrivelse | Intern Alma-ID (MMS-ID). Bør helst ikke vises.
+|Beskrivelse | Per i dag flere funksjoner: Intern Alma-ID (MMS-ID), filnavn ved ingest (veldig rar løsning).
 |===
 
 
