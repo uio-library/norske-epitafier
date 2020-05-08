@@ -21,17 +21,24 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |Beskrivelse | Generert standardtekst på formen «Norske epitafier 1550–1700: Epitafium over N»
 |===
 
+=== Katalogkode
+|===
+|URI | :catalogCode
+|Underegenskap av | dc:identifier
+|Beskrivelse |
+|===
+
 === Epitafium over (skjult fordi feltet inngår i tittel)
 |===
 |URI | :epitaphOn
 |Beskrivelse | Person(er) som epitafiet er til minne over. Eksempel: «Christen Jensen (Sorenskriver) og hustru Gye Lauridtzdatter, med barn»
 |===
 
-=== Dato
-[cols="35s,65", stripes=odd]
+=== Opprinnelig plassering
 |===
-|URI | dc:date
-|Beskrivelse | Datering (omtrentlig eller eksakt) for når epitafiet ble fremstilt. Omtrentlige verdier kan f.eks. ha formen «1590-tallet» og «ca. 1630».
+|URI | :originalLocation
+|Underegenskap av | dc:spatial
+|Beskrivelse | Kirke epitafiet opprinnelig var plassert i.
 |===
 
 === Plassering
@@ -42,32 +49,25 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |Beskrivelse | Nåværende plassering, typisk navn på et museum eller en kirke
 |===
 
-=== Opprinnelig plassering
+=== Dato
+[cols="35s,65", stripes=odd]
 |===
-|URI | :originalLocation
-|Underegenskap av | dc:spatial
-|Beskrivelse | Kirke epitafiet opprinnelig var plassert i.
+|URI | dc:date
+|Beskrivelse | Datering (omtrentlig eller eksakt) for når epitafiet ble fremstilt. Omtrentlige verdier kan f.eks. ha formen «1590-tallet» og «ca. 1630».
 |===
 
-=== Stift
+=== Stift (skjult fordi det fremkommer av katalognummer)
 |===
 |URI | :diocese
 |Beskrivelse | Historisk stift, slik de så ut rundt ca. 1700. Fire mulige verdier: «Bergen», «Oslo/Christiania», «Stavanger» eller «Trondhjem».
 |===
 
-=== Kunstner
+=== Utformet av
 [cols="35s,65", stripes=odd]
 |===
 |URI | :artist
 |Underegenskap av | dc:creator
 |Beskrivelse | Person(er) som har fremstilt epitafiet. Ofte ukjent. Feltet kan ha komplekse verdier som «X har stått for utskjæringene, Y har malt bildet.» og «Antagelig utformet av X.»
-|===
-
-=== Beskrivelse
-[cols="35s,65", stripes=odd]
-|===
-|URI | dc:description
-|Beskrivelse | Fysisk beskrivelse av epitafiet. Eks: ...
 |===
 
 === Innskrifter
@@ -82,6 +82,13 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |===
 |URI | :notes
 |Beskrivelse | (Fylles inn)
+|===
+
+=== Beskrivelse
+[cols="35s,65", stripes=odd]
+|===
+|URI | dc:description
+|Beskrivelse | Fysisk beskrivelse av epitafiet. Eks: ...
 |===
 
 === Referanser
@@ -103,13 +110,6 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |===
 |URI | dcterms:source
 |Beskrivelse | Standardtekst som går igjen på alle epitafiene. Eksempel: ..
-|===
-
-=== Katalogkode
-|===
-|URI | :catalogCode
-|Underegenskap av | dc:identifier
-|Beskrivelse |
 |===
 
 === Identifikator (skjult)
