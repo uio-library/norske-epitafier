@@ -21,26 +21,23 @@
 
       <location xml:lang="nob"><xsl:value-of select="plassering/navn"/></location>
 
-      <dc:creator xml:lang="nob"><xsl:value-of select="skaper"/></dc:creator>
+      <artist xml:lang="nob"><xsl:value-of select="skaper"/></artist>
 
       <dc:date><xsl:value-of select="datering"/></dc:date>
 
-      <dc:title xml:lang="nob">Norske epitafier 1550–1700: Epitafium over <xsl:value-of select="avbildet"/> [TEST @ 2020-05-05]</dc:title>
+      <dc:title xml:lang="nob">Norske epitafier 1550–1700: <xsl:value-of select="avbildet"/> 
+      (<xsl:value-of select="opprinnelig_plassering/navn"/>)
+      [TEST @ 2020-05-05]</dc:title>
 
       <dcterms:description xml:lang="nob"><xsl:value-of select="py:tohtml(beskrivelse)"/></dcterms:description>
 
       <notes><xsl:value-of select="merknader"/></notes>
 
       <inscriptions xml:lang="nob">
-        <xsl:for-each select="innskrift">&lt;b&gt;<xsl:value-of select="plassering"/>:&lt;/b&gt;
-            <xsl:text> </xsl:text><!-- explicit space -->
-            <xsl:value-of select="py:tohtml(original)"/>
-            <xsl:if test="oversettelse != ''">
-              &lt;br&gt;&lt;b&gt;Oversettelse: &lt;/b&gt;
-              <xsl:value-of select="py:tohtml(oversettelse)"/>
-            </xsl:if>
-            &lt;br&gt;&lt;br&gt;
-        </xsl:for-each>
+        <xsl:if test="count(innskrift) = 0">
+          &lt;i&gt;Ingen&lt;/i&gt;
+        </xsl:if>
+        <xsl:for-each select="innskrift">&lt;b&gt;<xsl:value-of select="plassering"/>:&lt;/b&gt;&lt;br /&gt;<xsl:value-of select="py:tohtml(original)"/><xsl:if test="py:trim(oversettelse) != ''">&lt;br&gt;&lt;i&gt;Oversettelse: &lt;/i&gt;&lt;br /&gt;<xsl:value-of select="py:tohtml(oversettelse)"/></xsl:if>&lt;br&gt;&lt;br&gt;</xsl:for-each>
       </inscriptions>
 
       <xsl:for-each select="referanse">
@@ -48,6 +45,10 @@
           <xsl:value-of select="py:tohtml(.)"/>
         </dcterms:bibliographicCitation>
       </xsl:for-each>
+
+      <!-- Ansvarshavende
+      <dc:creator>???</dc:creator>
+      -->
 
       <dc:source xml:lang="nob">[forslag til tekst] Dokumentasjon av epitafier i Norge, gjennomført av Teologisk fakultet.
         Nummer i tittel er katalognummeret i prosjektkatalogen utarbeidet ved TF.

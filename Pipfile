@@ -13,6 +13,7 @@ requests = "*"
 boto3 = "*"
 addict = "*"
 rnc2rng = "*"
+pyyaml = "*"
 
 [requires]
 python_version = "3.7"

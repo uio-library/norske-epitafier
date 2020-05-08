@@ -129,9 +129,9 @@ Hent inn avhengigheter med pipenv:
 
 	pipenv install
 
-Lag en `.env`-fil for hemmeligheter:
+Opprett en konfigurasjonsfil:
 
-	cp .env.dist .env
+	cp config.yml.dist config.yml
 
 og legg nøkler for Alma og S3 her.
 
@@ -139,13 +139,7 @@ og legg nøkler for Alma og S3 her.
 
 For å konvertere poster fra lokalt XML-format til Dublin Core:
 
-	pipenv -m scripts.convert
-
-=== Laste opp
-
-For å laste opp til Alma:
-
-	pipenv -m scripts.upload
+	pipenv -m scripts.process
 
 === Synkronisere ID-er
 

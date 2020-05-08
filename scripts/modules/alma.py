@@ -12,7 +12,10 @@ class AlmaApi:
             'Accept': 'application/json'
         }
 
-    def get(self, *args, **kwargs):
-        args = list(args)
-        url = urljoin(self.base_url, args.pop(0))
-        return self.session.get(url, *args, **kwargs)
+    def get(self, url, **kwargs):
+        url = urljoin(self.base_url, url)
+        return self.session.get(url, **kwargs)
+
+    def post(self, url, **kwargs):
+        url = urljoin(self.base_url, url)
+        return self.session.post(url, **kwargs)

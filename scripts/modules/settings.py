@@ -1,20 +1,39 @@
-# Settings
-from addict import Dict
-from dotenv import load_dotenv
+import os
+import yaml
+from dataclasses import dataclass, field
 
-load_dotenv()
+@dataclass
+class Settings:
+    src_dir: str
+    dist_dir: str
+    dc_xml_file: str
+    xsl_file: str
+    alma_ids_file: str
+    default_namespace: str
+    alma_api_base_url: str
+    alma_import_profile: str
+    alma_collection: str
+    alma_s3_bucket: str
+    alma_s3_folder: str
+    alma_api_key: str = field(repr=False)
+    aws_access_key_id: str = field(repr=False)
+    aws_secret_access_key: str = field(repr=False)
 
-settings = Dict(
-    src_dir='src',
-    dist_dir='dist',
-    dc_xml_file='dc.xml',
-    xsl_file='scripts/dc_record.xsl',
-    alma_ids_file='alma_ids.json',
-    default_namespace='http://alma.exlibrisgroup.com/dc/47BIBSYS_UBO',
-    alma_api_base_url='https://api-eu.hosted.exlibrisgroup.com/almaws/v1/',
-    alma_import_profile='9339796690002204',
-    alma_collection='@TODO',
-    alma_s3_bucket='eu-st01.ext.exlibrisgroup.com',
-    alma_s3_folder='47BIBSYS_UBO'
-    # eu-st01.ext.exlibrisgroup.com/47BIBSYS_UBO
-)
+
+def require_existence(path, type):
+    if not os.path.exists(path):
+        die('Directory does not exist: %s' % path)
+    if type == 'file' and not os.path.isfile(path):
+        die('Not a file: %s' % path)
+    if type == 'dir' and not os.path.isdir(path):
+        die('Not a directory: %s' % path)
+
+
+with open('config.yml') as fp:
+     conf = yaml.safe_load(fp)
+settings = Settings(**conf)
+
+require_existence(settings.src_dir, 'dir')
+require_existence(settings.dist_dir, 'dir')
+require_existence(settings.xsl_file, 'file')
+require_existence(settings.alma_ids_file, 'file')
