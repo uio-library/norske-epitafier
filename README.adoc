@@ -1,11 +1,29 @@
 = Norske epitafier
 
-Dette repoet inneholder data for «Norske epitafier» som XML-filer,
+Dette repoet inneholder katalogdata for «Norske epitafier 1550–1700» som XML-filer,
 samt script for å konvertere postene til Dublin Core og laste dem opp til Alma Digital.
 
-== Dublin Core applikasjonsprofil
+Hver katalogpost har en mappe med navn tilsvarende postens katalogkode,
+som består av stiftsnavn og et løpenummer, f.eks. "bergen-01".
+Hver mappe inneholder en `metadata.xml`-fil og én eller flere bildefiler.
 
-Definisjon av felter som brukes i xml-versjonen av katalogen, og hvilke felter disse skal korrespondere med i DC application profile 1 i UBOs katalog.
+		src/
+				bergen-01/
+						metadata.xml
+						bilde 1.jpg
+						bilde 2.jpg
+						biografi.jpg
+				...
+
+XML-filene følger skjemaet definert i `epitafium.rnc` ([RELAX NG Compact](https://relaxng.org/compact-20021121.html)).
+
+For import til Alma, konverteres filene til ved hjelp av XSLT-filen `scripts/dc_record.xsl` til en Dublin Core applikasjonsprofil
+definert i Alma (http://alma.exlibrisgroup.com/dc/47BIBSYS_UBO). Denne er i liten grad kompatibel med andre skjemaer,
+og blander dessuten inn presentasjonselementer, så den er mest en pragmatisk løsning for å få dataene inn i Alma Digital.
+
+== Dataelementer
+
+Definisjon av felter som brukes i XML-versjonen av katalogen, og hvilke felter disse skal korrespondere med i DC application profile 1 i UBOs katalog.
 
 Feltene i Alma Digital konfigureres i ExLibris Alma under `Alma Configuration > Resources > Cataloging > Metadata Configuration > DC application profile 1`
 
