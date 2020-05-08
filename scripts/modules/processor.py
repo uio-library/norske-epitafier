@@ -1,6 +1,11 @@
 #!/usr/bin/env python
+import os
+import re
 from collections import OrderedDict
-from lxml.etree import parse, tostring, XSLT, Element, FunctionNamespace, XMLParser, XMLSchema
+from pathlib import Path
+from typing import List
+
+from lxml.etree import parse, tostring, XSLT, Element, FunctionNamespace, XMLParser, RelaxNG
 import json
 
 
@@ -21,11 +26,11 @@ def tohtml(context, values):
 
 
 def convert_record(filename: str, xsl_filename: str, alma_ids_filename: str):
-    # print(filename)
     source_doc = parse(filename)
 
-    schema_doc = parse('epitafium.xsd')
-    schema = XMLSchema(schema_doc)
+    with open('epitafium.rnc') as schema_file:
+        schema = RelaxNG.from_rnc_string(schema_file.read())
+
     if schema.validate(source_doc):
         pass
         # print("VALID!")
@@ -53,3 +58,15 @@ def convert_record(filename: str, xsl_filename: str, alma_ids_filename: str):
 
     # Output
     return target_doc.getroot()
+
+
+def get_filenames_from_xml(xml_file: Path) -> List[Path]:
+    source_doc = parse(str(xml_file))
+    filenames = []
+    for file_node in source_doc.findall('fil'):
+        filename = file_node.find('filnavn').text
+        if filename not in os.listdir(str(xml_file.parent)):
+            print('File not found: %s' % filename)
+            continue
+        filenames.append(Path(xml_file.parent, filename))
+    return filenames

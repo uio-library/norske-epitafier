@@ -12,6 +12,7 @@ python-dotenv = "*"
 requests = "*"
 boto3 = "*"
 addict = "*"
+rnc2rng = "*"
 
 [requires]
 python_version = "3.7"

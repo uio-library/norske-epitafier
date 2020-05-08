@@ -1,0 +1,37 @@
+element epitafium {
+  element katalognummer { text }
+  & element avbildet { text }
+  & element datering { text }
+  & element stift { text }
+  & element referanse { text }?
+  & element beskrivelse { text }?
+  & element merknader { text }?
+  & element skaper { text }?
+
+  & element opprinnelig_plassering {
+    element navn { text }
+    & element wikidata_id { text }
+    & element koordinater { text }
+  }
+
+  & element plassering {
+    element navn { text }
+    & element wikidata_id { text }
+    & element koordinater { text }
+  }
+
+  & element innskrift {
+    element plassering { text }
+    & element original { text }
+    & element oversettelse { text }?
+  }*
+
+  & element fil {
+    element filnavn { text }
+    & element visningsnavn { text }
+    & element kreditering { text }
+    & element lisens { text }
+    & element dato { text }
+  }+
+
+}
