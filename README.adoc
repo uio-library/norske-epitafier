@@ -36,7 +36,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 [cols="35s,65", stripes=odd]
 |===
 |URI | dc:title
-|Beskrivelse | Generert standardtekst på formen «Norske epitafier 1550–1700: Epitafium over N»
+|Beskrivelse | Generert standardtekst på formen «Norske epitafier 1550–1700: {Epitafium over} ({Opprinnelig plassering})»
 |===
 
 === Katalogkode
