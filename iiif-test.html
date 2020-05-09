@@ -15,137 +15,265 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/2.4.0/openseadragon.min.js"></script>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.4.6/tailwind.min.css">
-    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <style type="text/css" media="screen">
+        html, body {
+            height: 100%;
+        }
+        h1, h2, h3 {
+            font: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+            font-weight: 100 !important;
+        }
+    </style>    
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
-<style type="text/css" media="screen">
-        #app {
-            padding: 2em;
-        }
-        h2 {
-            border-bottom: 1px solid #888;
-        }
-    </style>
+
 </head>
 <body>
-<div id="app">
+<div id="app" class="h-full">
     <main-view></main-view>
 </div>
 <script>
 
 Vue.component('main-view', {
     template: `
-        <div>
-            <h2 class="my-3">Load Alma Digital representation</h2>
-            <form class="d-flex" @submit.prevent="loadManifest()">
-                <input
-                    v-model="representation_input"
-                    type="text" 
-                    class="form-control m-1"
-                    placeholder="Alma Representation ID"
-                >
-                <button 
-                    @click="loadManifest()" 
-                    class="btn btn-primary m-1"
-                >Open</button>
-            </form>
+        <div class="d-flex flex-column h-full">
+            <div class="p-3 bg-teal-400"> 
+                <h1><a href="iiif-test.html" class="text-white">Alma Digital IIIF test</a></h1>
+            </div>
+            <div class="p-3 bg-gray-200">
+                <div class="mb-2 mx-1">
+                    Choose an example: 
+                    <span v-for="samp in samples" class="px-2">
+                        <a :href="'?representation=' + samp.id">{{ samp.label }}</a>
+                    </span>                                
+                </div>
+                <form class="d-flex flex-column flex-sm-row align-items-baseline" @submit.prevent="loadManifest()">
+                    <div class="text-nowrap m-1">
+                        or enter a digital representation ID: 
+                    </div>
+                    <input
+                        v-model="representation_input"
+                        type="text" 
+                        class="form-control m-1"
+                        placeholder="Alma Representation ID"
+                    >
+                    <button 
+                        type="submit"
+                        class="btn btn-primary m-1"
+                    >Open</button>
+                </form>
+            </div>
 
-            <div v-if="representation">
-                <manifest-viewer :representation="representation"></manifest-viewer>        
+            <div v-if="loading" class="p-3 text-gray-600">
+                Loading manifest...
+            </div>
+            <div v-else-if="error" class="p-3">
+                <div class="alert alert-danger">
+                    No Alma Digital representation with ID "{{ representation }}" was found.
+                </div>
+            </div>
+
+            <div v-if="manifest" class="flex-grow-1" style="overflow: auto">
+                <manifest-viewer :manifest="manifest"></manifest-viewer>
+            </div>
+            <div v-if="manifest" class="px-3 py-2 text-sm bg-teal-500 text-white text-center">
+                Note: If tiles fail to load, it's most likely because the URLs are inactive.
+                This is a known bug that we have reported to Ex Libris.
+                To re-active the URL, visit <a target="_blank" class="text-white underline" :href="'https://bibsys-k.alma.exlibrisgroup.com/view/UniversalViewer/47BIBSYS_UBO/' + representation">Alma Universal Viewer</a>.
+                Then wait a few seconds and reload this page.
             </div>
         </div>
     `,
     data () {
         return {
+            loading: false,
             representation: null,
-            representation_input: '12247661610002204'
+            representation_input: '',
+            manifest: null,
+            error: null,
+            samples: [
+                {
+                    id: '12247651280002204',
+                    label: 'bergen-05',
+                },
+                {
+                    label: 'kristiansand-22',
+                    id: '12248721410002204',
+                },{
+                    label: 'ukjent-01',
+                    id: '12248721440002204',
+                },
+                {
+                    label: 'kristiania-06',
+                    id: '12248720930002204',
+                },
+                {
+                    label: 'kristiania-04 (virker ikke) ',
+                    id: '12248721420002204',
+                },
+                {
+                    label: 'trondheim-06',
+                    id: '12248730430002204',
+                },
+            ],
         }
     },
     methods: {
         loadManifest () {
+
+            if (!this.representation_input) {
+                return;
+            }
+
             this.representation = this.representation_input
-        }
-    },
-    mounted () {
-        this.loadManifest()
-    },
-})
 
-Vue.component('manifest-viewer', {
-    props: {
-        representation: String
-    },
-    data () {
-        return {
-            canvases: [],
-            activeCanvas: null,
-        }
-    },
-    template: `
-        <div>
-            <div class="flex my-3">
-                <button v-for="canvas in canvases"
-                    style="width: 10rem" 
-                    class="p-2 mr-1 transition duration-400 rounded ease-out border-solid border-2 border-gray-200"
-                    :class="{'border-gray-600': activeCanvas == canvas, 'bg-gray-100': activeCanvas == canvas}"
-                    @click="activeCanvas = canvas"
-                >
-                    <img :src="canvas.thumbnail['@id']" :alt="canvas.label" class="object-contain w-full" style="height: 8rem">
-                    <div class="text-sm text-center text-gray-900 pt-1">
-                        {{ canvas.label }}                
-                    </div>
-                </button>
-            </div>
-
-            <div class="my-3">        
-                <h2>OpenSeadragon</h2>
-                <opensea-viewer :canvas="activeCanvas"></opensea-viewer>
-            </div>
-        </div>
-    `,
-    mounted () {
-        this.initialize()
-    },
-    watch: {
-        representation (newValue, oldValue) {
-            this.initialize()
-        }
-    },
-    methods: {
-        initialize () {
             console.log('Load manifest for represenation: ' + this.representation)
             const http = axios.create({credentials: true})
-            this.instance = null
+
+            this.loading = true
+            this.error = null
+            this.manifest = null
+
+            if (!this.popcorn) {
+                history.pushState(null, null, "?representation=" + this.representation)
+                this.popcorn = false
+            }
 
             // Get IIIF Manifest
             http.get(`https://bibsys-k.userservices.exlibrisgroup.com/view/iiif/presentation/${this.representation}/manifest`)
                 .then(res => res.data)
                 .then(manifest => {
                     console.log(manifest)
-                    this.canvases = manifest.sequences[0].canvases
-                    this.activeCanvas = this.canvases[0]
+                    this.manifest = manifest
+                    this.loading = false
                 })
+                .catch(err => {
+                    this.error = err
+                    this.loading = false
+                })
+        },
+    },
+    mounted () {
+        const searchParams = new URLSearchParams(document.location.search);
+        this.representation_input = searchParams.get('representation');
+
+        this.loadManifest()
+
+        window.addEventListener('popstate', (event) => {
+            this.popcorn = true;
+            const searchParams = new URLSearchParams(document.location.search);
+            const repr = searchParams.get('representation');
+            if (repr) {
+                this.representation_input = repr
+                this.loadManifest()
+            }
+        })
+    },
+})
+
+Vue.component('manifest-viewer', {
+    template: `
+        <div class="d-flex flex-column h-full" style="overflow: auto">
+            <h3 class="p-3">{{ manifest.label }}</h3>
+
+            <div class="flex-grow-1 d-flex flex-column flex-sm-row h-full" style="overflow: auto">
+
+                <div class="px-3 d-flex" style="overflow: auto;">
+                    <div class="d-flex flex-row flex-sm-column">
+                        <button v-for="canvas in canvases"
+                                style="width: 7rem" 
+                                class="p-1 mb-1 transition duration-400 rounded ease-out border-solid border-2 border-gray-100"
+                                :class="{'border-gray-600': activeCanvas == canvas, 'bg-gray-100': activeCanvas == canvas}"
+                                @click="activeCanvas = canvas"
+                        >
+                            <img :src="canvas.thumbnail['@id']" :alt="canvas.label" class="object-contain w-full" style="height: 6rem">
+                            <div class="text-sm text-center text-gray-900 pt-1">
+                                {{ canvas.label }}                
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex-grow-1 d-flex flex-column" style="overflow: auto;">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item" v-for="viewer in viewers" :key="viewer.key">
+                            <a class="nav-link" :class="{'active': activeViewer == viewer.key}" href="#" @click.prevent="activeViewer = viewer.key">{{ viewer.name }}</a>
+                        </li>
+                    </ul>
+
+                    <div class="flex-grow-1">
+                        <component v-bind:is="activeViewer" :canvas="activeCanvas"></component>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    `,
+    props: {
+        manifest: Object
+    },
+    data () {
+        return {
+            canvases: [],
+            activeCanvas: null,
+            viewers: [
+                {
+                    key: 'openseadragon-viewer',
+                    name: 'OpenSeadragon',
+                },
+                {
+                    key: 'openlayers-viewer',
+                    name: 'OpenLayers',
+                },
+                {
+                    key: 'leaflet-viewer',
+                    name: 'Leaflet',
+                },
+            ],
+            activeViewer: 'openseadragon-viewer',
+        }
+    },
+    mounted () {
+        this.initialize()
+    },
+    watch: {
+        manifest (newValue, oldValue) {
+            this.initialize()
+        }
+    },
+    methods: {
+        initialize () {
+            this.canvases = this.manifest.sequences[0].canvases
+            this.activeCanvas = this.canvases[0]
         },
     },
 })
 
-Vue.component('opensea-viewer', {
+Vue.component('openseadragon-viewer', {
+    template: `
+        <div class="d-flex flex-column h-full" style="position: relative">
+            <div 
+                ref="viewer" 
+                class="flex-grow-1" 
+                style="background: black; color: white"
+            ></div>
+            <div v-if="error" style="position: absolute;" class="bg-gray-900 text-red-500 text-2xl px-3 py-1 m-3 rounded">{{ this.error }}</div>
+        </div>
+    `,
     props: {
         canvas: Object,
     },
-    template: `
-        <div>
-            <div class="my-3 border border-gray-300">
-                <div ref="viewer" style="width: 100%; height: 500px; background: black; color: white"></div>
-            </div>
-            <p>
-                If the view above does not load, it's because the tile URLs are not active.
-                Try <a class="text-blue-500 hover:underline" target="_blank" :href="'https://bibsys-k.alma.exlibrisgroup.com/view/UniversalViewer/47BIBSYS_UBO/' + this.representation">opening the Alma Universal Viewer first</a>, wait a few seconds, then reload <em>this</em> page, and it should magically work.
-            </p>
-        </div>
-    `,
+    data () {
+        return {
+            error: null,
+        }
+    },
     mounted () {
         this.initialize()
     },
@@ -156,6 +284,7 @@ Vue.component('opensea-viewer', {
     },
     methods: {
         initialize () {
+            this.error = null
             if (this.instance) {
                 this.instance.destroy()
             }
@@ -185,7 +314,79 @@ Vue.component('opensea-viewer', {
                 // be kept within the viewport. If the image is dragged beyond that limit,
                 // it will 'bounce' back until the minimum visibility ratio is achieved.
                 visibilityRatio: 1.0,
-            })        
+            })
+
+            this.instance.addHandler('tile-load-failed', event => {
+                console.log('Tile failed to load', event)
+                this.error = 'ERROR: Tile could not be loaded';
+            })
+
+            this.instance.addHandler('open-failed', event => {
+                this.error = 'ERROR: Image could not be loaded';
+            })
+
+            this.instance.addHandler('tile-loaded', event => {
+                this.error = null;
+            })
+
+        },
+    },
+})
+
+Vue.component('openlayers-viewer', {
+    template: `
+        <div class="d-flex flex-column h-full bg-gray-900 text-white p-3">
+            Not implemented yet.
+        </div>
+    `,
+    props: {
+        canvas: Object,
+    },
+    data () {
+        return {
+            error: null,
+        }
+    },
+    mounted () {
+        this.initialize()
+    },
+    watch: {
+        canvas (newValue, oldValue) {
+            this.initialize()
+        }
+    },
+    methods: {
+        initialize () {
+            this.error = null
+        },
+    },
+})
+
+Vue.component('leaflet-viewer', {
+    template: `
+        <div class="d-flex flex-column h-full bg-gray-900 text-white p-3">
+            Not implemented yet.
+        </div>
+    `,
+    props: {
+        canvas: Object,
+    },
+    data () {
+        return {
+            error: null,
+        }
+    },
+    mounted () {
+        this.initialize()
+    },
+    watch: {
+        canvas (newValue, oldValue) {
+            this.initialize()
+        }
+    },
+    methods: {
+        initialize () {
+            this.error = null
         },
     },
 })
