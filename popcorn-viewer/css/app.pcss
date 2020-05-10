@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+
+html, body {
+  height: 100%;
+}
+
+h1 {
+  @apply text-3xl font-hairline;
+
+  a {
+    @apply text-white;
+
+    &:hover {
+      @apply no-underline text-gray-200;
+    }
+  }
+}
+
+h2 {
+  @apply text-2xl font-hairline;
+}
+
+a {
+  @apply inline-block text-blue-500;
+
+  &:hover {
+    @apply underline;
+  }
+}
+
+/* Forms */
+
+.text-input {
+  @apply px-3 py-1 border rounded-sm;
+}
+
+.text-input:focus, .btn:focus {
+  @apply outline-none shadow-outline;
+}
+
+.btn {
+  @apply inline-block px-6 py-1 bg-teal-500 text-white uppercase tracking-wide rounded-sm shadow;
+
+  &:hover, &:focus {
+    @apply bg-teal-400;
+  }
+
+  &:active {
+    @apply bg-teal-800 shadow-none;
+    transform: translate(1px, 1px);
+  }
+}
+
+.viewer-error {
+  @apply bg-gray-900 border-2 border-red-500 text-red-500 text-xl px-3 py-1 m-3 rounded absolute mx-12 my-4 font-mono;
+}
+
+@tailwind utilities;
