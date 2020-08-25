@@ -1,29 +1,14 @@
-# Usage: pipenv run python -m scripts.upload
+# Usage: poetry run python run scripts.process
 import uuid
-import os
 from pathlib import Path
-import os
-from pathlib import Path
-from typing import List, Generator, Optional
-from lxml.etree import tostring, Element, cleanup_namespaces
+from typing import List
+from lxml.etree import tostring, Element
 
 import boto3
 from lxml.etree import cleanup_namespaces
 from scripts.modules.processor import get_filenames_from_xml, convert_record
 from .modules.settings import Settings, settings
 from .modules.alma import AlmaApi
-
-
-def list_records(src_dir: Path) -> List[Path]:
-    source_dirs = []
-    for path in src_dir.glob('*'):
-        if not os.path.isdir(path):
-            continue
-        if not Path(path, 'metadata.xml').exists():
-            print('Ignore: %s : no metadata.xml' % path.name)
-            continue
-        source_dirs.append(path)
-    return source_dirs
 
 
 def make_dc_xml(settings: Settings, record_dirs: List[Path]) -> Path:
@@ -94,7 +79,7 @@ def run_alma_import_job(settings, import_name):
 def main(settings, filter = None):
 
     # List records dirs
-    record_dirs = list_records(Path(settings.src_dir))
+    record_dirs = list_source_records(Path(settings.src_dir))
 
     # Optional: Filter to a subset of all dirs
     if filter is not None:

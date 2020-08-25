@@ -1,6 +1,9 @@
-import os
-import yaml
 from dataclasses import dataclass, field
+
+import yaml
+
+from .util import require_existence
+
 
 @dataclass
 class Settings:
@@ -21,17 +24,9 @@ class Settings:
     aws_secret_access_key: str = field(repr=False)
 
 
-def require_existence(path, type):
-    if not os.path.exists(path):
-        die('Directory does not exist: %s' % path)
-    if type == 'file' and not os.path.isfile(path):
-        die('Not a file: %s' % path)
-    if type == 'dir' and not os.path.isdir(path):
-        die('Not a directory: %s' % path)
-
-
 with open('config.yml') as fp:
-     conf = yaml.safe_load(fp)
+    conf = yaml.safe_load(fp)
+
 settings = Settings(**conf)
 
 require_existence(settings.src_dir, 'dir')
