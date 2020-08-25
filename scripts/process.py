@@ -14,13 +14,16 @@ from .modules.settings import Settings, settings
 from .modules.alma import AlmaApi
 
 
-def list_records(src_dir: Path) -> Generator[Path, None, None]:
-    source_dirs = [path for path in src_dir.glob('*') if os.path.isdir(path)]
-    for source_dir in source_dirs:
-        if not Path(source_dir, 'metadata.xml').exists():
-            print('Ignore: %s : no metadata.xml' % source_dir.name)
+def list_records(src_dir: Path) -> List[Path]:
+    source_dirs = []
+    for path in src_dir.glob('*'):
+        if not os.path.isdir(path):
             continue
-        yield source_dir
+        if not Path(path, 'metadata.xml').exists():
+            print('Ignore: %s : no metadata.xml' % path.name)
+            continue
+        source_dirs.append(path)
+    return source_dirs
 
 
 def make_dc_xml(settings: Settings, record_dirs: List[Path]) -> Path:
@@ -102,10 +105,13 @@ def main(settings, filter = None):
 
     # Add images files to upload queue
     for record_dir in record_dirs:
+        print('<<< DIR: %s >>>' % record_dir)
         for path in get_filenames_from_xml(Path(record_dir, 'metadata.xml')):
+            print('Add: %s' % path)
             upload_queue.append(path)
 
     # Confirm upload
+    print('Upload queue: %d' % len(upload_queue))
     while True:
         confirm = input('Continue with upload? [Y|n] ').lower()
         if confirm == 'n':
@@ -129,4 +135,4 @@ if __name__ == '__main__':
         'bergen05',
         'ukjent01',
     ]
-    main(settings, filter=lambda x: x.name in record_ids)
+    main(settings)  #, filter=lambda x: x.name in record_ids)

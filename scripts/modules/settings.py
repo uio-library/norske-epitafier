@@ -12,6 +12,7 @@ class Settings:
     default_namespace: str
     alma_api_base_url: str
     alma_import_profile: str
+    alma_set: str
     alma_collection: str
     alma_s3_bucket: str
     alma_s3_folder: str

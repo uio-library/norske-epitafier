@@ -15,7 +15,7 @@ ns = FunctionNamespace('file://processor.py')
 
 @ns
 def trim(context, values):
-    values = [x.text for x in values]
+    values = [x.text for x in values if x.text is not None]
     return ''.join(values).strip()
 
 
