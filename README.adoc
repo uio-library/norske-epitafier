@@ -1,6 +1,6 @@
 = Norske epitafier
 
-Dette repoet inneholder katalogdata for «Norske epitafier 1550–1700» som XML-filer,
+Dette repoet inneholder katalogdata for «Norske epitafier 1537–1700» som XML-filer,
 samt script for å konvertere postene til Dublin Core og laste dem opp til Alma Digital.
 
 Hver katalogpost har en mappe med navn tilsvarende postens katalogkode,
@@ -36,27 +36,34 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 [cols="35s,65", stripes=odd]
 |===
 |URI | dc:title
-|Beskrivelse | Generert standardtekst på formen «Norske epitafier 1550–1700: {Epitafium over} ({Opprinnelig plassering})»
+|Beskrivelse | Generert standardtekst på formen «Norske epitafier 1537–1700: {Epitafium over} ({Opprinnelig plassering})»
+|PNX | `Display/title` og `Search/title`
 |===
 
 === Katalogkode
+[cols="35s,65", stripes=odd]
 |===
 |URI | :catalogCode
 |Underegenskap av | dc:identifier
 |Beskrivelse |
+|PNX | `Search/addsrcrecordid`?
 |===
 
 === Epitafium over (skjult fordi feltet inngår i tittel)
+[cols="35s,65", stripes=odd]
 |===
 |URI | :epitaphOn
 |Beskrivelse | Person(er) som epitafiet er til minne over. Eksempel: «Christen Jensen (Sorenskriver) og hustru Gye Lauridtzdatter, med barn»
+|PNX | - (søkbar via tittel)
 |===
 
 === Opprinnelig plassering
+[cols="35s,65", stripes=odd]
 |===
 |URI | :originalLocation
 |Underegenskap av | dc:spatial
 |Beskrivelse | Kirke epitafiet opprinnelig var plassert i.
+|PNX | Evt. `Display/description` med fortekst?
 |===
 
 === Plassering
@@ -65,6 +72,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |URI | :location
 |Underegenskap av | dc:spatial
 |Beskrivelse | Nåværende plassering, typisk navn på et museum eller en kirke
+|PNX | `Search/general`. Evt. `Display/description` med fortekst?
 |===
 
 === Dato
@@ -72,12 +80,15 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |===
 |URI | dc:date
 |Beskrivelse | Datering (omtrentlig eller eksakt) for når epitafiet ble fremstilt. Omtrentlige verdier kan f.eks. ha formen «1590-tallet» og «ca. 1630».
+|PNX| `Display/creationdate` og `Search/creationdate`
 |===
 
 === Stift (skjult fordi det fremkommer av katalognummer)
+[cols="35s,65", stripes=odd]
 |===
 |URI | :diocese
 |Beskrivelse | Historisk stift, slik de så ut rundt ca. 1700. Fire mulige verdier: «Bergen», «Oslo/Christiania», «Stavanger» eller «Trondhjem».
+|PNX| Evt. `Display/description` med fortekst?
 |===
 
 === Utformet av
@@ -86,6 +97,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |URI | :artist
 |Underegenskap av | dc:creator
 |Beskrivelse | Person(er) som har fremstilt epitafiet. Ofte ukjent. Feltet kan ha komplekse verdier som «X har stått for utskjæringene, Y har malt bildet.» og «Antagelig utformet av X.»
+|PNX | `Display/creator` og `Search/creator`
 |===
 
 === Innskrifter
@@ -93,6 +105,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |===
 |URI | :inscriptions
 |Beskrivelse | Feltet inneholder alle innskrifter, samt overskrifter. Er html-formatert med avsnitt pga. manglende formateringsmuligheter i visning.
+|PNX | `Search/general`. Evt. `Display/description` med fortekst?
 |===
 
 === Merknader
@@ -100,6 +113,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |===
 |URI | :notes
 |Beskrivelse | (Fylles inn)
+|PNX | `Search/general`. Evt. `Display/description` med fortekst?
 |===
 
 === Beskrivelse
@@ -107,6 +121,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |===
 |URI | dc:description
 |Beskrivelse | Fysisk beskrivelse av epitafiet. Eks: ...
+|PNX | `Search/general`. Evt. `Display/description` med fortekst?
 |===
 
 === Referanser
@@ -114,6 +129,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |===
 |URI | dcterms:bibliographicCitation
 |Beskrivelse | Referanser til omtale av epitafiet.
+|PNX | Evt. `Display/description` med fortekst?
 |===
 
 === Rettigheter (?)
@@ -121,6 +137,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |===
 |URI | dc:rights
 |Beskrivelse | (Ikke avklart helt enda. Vi har rettighetsinformasjon på både tekst og foto)
+|PNX | `Display/rights`
 |===
 
 === Kilde (?)
@@ -128,6 +145,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |===
 |URI | dcterms:source
 |Beskrivelse | Standardtekst som går igjen på alle epitafiene. Eksempel: ..
+|PNX | `Display/source`?
 |===
 
 === Identifikator (skjult)
@@ -135,6 +153,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |===
 |URI | dc:identifier
 |Beskrivelse | Per i dag flere funksjoner: Intern Alma-ID (MMS-ID), filnavn ved ingest (veldig rar løsning).
+|PNX | –
 |===
 
 
@@ -157,12 +176,12 @@ og legg nøkler for Alma og S3 her.
 
 For å konvertere poster fra lokalt XML-format til Dublin Core:
 
-	pipenv -m scripts.process
+	python -m scripts.process
 
 === Synkronisere ID-er
 
 Når postene har blitt importert i Alma bør man hente ned ID-ene som har blitt generert for postene:
 
-	pipenv -m scripts.fetch_ids
+	python -m scripts.fetch_ids
 
 Disse lagres i fila `alma_ids.json`.
