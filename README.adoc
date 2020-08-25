@@ -162,9 +162,9 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 
 === Oppsett
 
-Hent inn avhengigheter med pipenv:
+Hent inn avhengigheter med poetry:
 
-	pipenv install
+	poetry install
 
 Opprett en konfigurasjonsfil:
 
@@ -176,12 +176,12 @@ og legg nøkler for Alma og S3 her.
 
 For å konvertere poster fra lokalt XML-format til Dublin Core:
 
-	python -m scripts.process
+	poetry run python -m scripts.process
 
 === Synkronisere ID-er
 
 Når postene har blitt importert i Alma bør man hente ned ID-ene som har blitt generert for postene:
 
-	python -m scripts.fetch_ids
+	poetry run python -m scripts.fetch_ids
 
 Disse lagres i fila `alma_ids.json`.
