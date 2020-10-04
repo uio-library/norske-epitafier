@@ -1,4 +1,4 @@
-= Norske epitafier
+= Norske epitafier 1537–1700
 
 Dette repoet inneholder katalogdata for «Norske epitafier 1537–1700» som XML-filer,
 samt script for å konvertere postene til Dublin Core og laste dem opp til Alma Digital.
@@ -161,7 +161,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 [cols="35s,65", stripes=odd]
 |===
 |URI | dcterms:isPartOf
-|Beskrivelse | Katalogens navn: «Norske epitafier 1550–1700». Skjult i fremviser, ment for visning i trefflister i Oria.
+|Beskrivelse | Katalogens navn: «Norske epitafier 1537–1700». Skjult i fremviser, ment for visning i trefflister i Oria.
 |PNX | `Display/ispartof`
 |===
 
