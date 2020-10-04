@@ -46,6 +46,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |URI | :catalogCode
 |Underegenskap av | dc:identifier
 |Beskrivelse |
+|Alma-kode | local2
 |PNX | `Search/addsrcrecordid`?
 |===
 
@@ -54,6 +55,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |===
 |URI | :epitaphOn
 |Beskrivelse | Person(er) som epitafiet er til minne over. Eksempel: «Christen Jensen (Sorenskriver) og hustru Gye Lauridtzdatter, med barn»
+|Alma-kode | local1
 |PNX | - (søkbar via tittel)
 |===
 
@@ -63,6 +65,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |URI | :originalLocation
 |Underegenskap av | dc:spatial
 |Beskrivelse | Kirke epitafiet opprinnelig var plassert i.
+|Alma-kode | local4
 |PNX | Evt. `Display/description` med fortekst?
 |===
 
@@ -72,6 +75,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |URI | :location
 |Underegenskap av | dc:spatial
 |Beskrivelse | Nåværende plassering, typisk navn på et museum eller en kirke
+|Alma-kode | local5
 |PNX | `Search/general`. Evt. `Display/description` med fortekst?
 |===
 
@@ -88,6 +92,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |===
 |URI | :diocese
 |Beskrivelse | Historisk stift, slik de så ut rundt ca. 1700. Fire mulige verdier: «Bergen», «Oslo/Christiania», «Stavanger» eller «Trondhjem».
+|Alma-kode | local3
 |PNX| Evt. `Display/description` med fortekst?
 |===
 
@@ -97,6 +102,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |URI | :artist
 |Underegenskap av | dc:creator
 |Beskrivelse | Person(er) som har fremstilt epitafiet. Ofte ukjent. Feltet kan ha komplekse verdier som «X har stått for utskjæringene, Y har malt bildet.» og «Antagelig utformet av X.»
+|Alma-kode | local6
 |PNX | `Display/creator` og `Search/creator`
 |===
 
@@ -105,6 +111,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |===
 |URI | :inscriptions
 |Beskrivelse | Feltet inneholder alle innskrifter, samt overskrifter. Er html-formatert med avsnitt pga. manglende formateringsmuligheter i visning.
+|Alma-kode | local7
 |PNX | `Search/general`. Evt. `Display/description` med fortekst?
 |===
 
@@ -113,6 +120,7 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |===
 |URI | :notes
 |Beskrivelse | (Fylles inn)
+|Alma-kode | local8
 |PNX | `Search/general`. Evt. `Display/description` med fortekst?
 |===
 
@@ -120,8 +128,17 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 [cols="35s,65", stripes=odd]
 |===
 |URI | dc:description
-|Beskrivelse | Fysisk beskrivelse av epitafiet. Eks: ...
+|Beskrivelse | Fysisk beskrivelse av epitafiet. Eks: ... Forfatteren av beskrivelsen er angitt med initialer på slutten av teksten.
 |PNX | `Search/general`. Evt. `Display/description` med fortekst?
+|===
+
+=== Biografi
+[cols="35s,65", stripes=odd]
+|===
+|URI | :biography
+|Beskrivelse | Lengre biografisk tekst om personen/-ene epitafiet er til minne over. Forfatteren av biografien er angitt med initialer på slutten av teksten.
+|Alma-kode | local9
+|PNX | -
 |===
 
 === Referanser
@@ -132,19 +149,27 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |PNX | Evt. `Display/description` med fortekst?
 |===
 
-=== Rettigheter (?)
+=== Kreditering
 [cols="35s,65", stripes=odd]
 |===
 |URI | dc:rights
-|Beskrivelse | (Ikke avklart helt enda. Vi har rettighetsinformasjon på både tekst og foto)
+|Beskrivelse | Informasjon om kreditering for gjenbruk av tekst og bilder.
 |PNX | `Display/rights`
 |===
 
-=== Kilde (?)
+=== Katalog (skjult)
+[cols="35s,65", stripes=odd]
+|===
+|URI | dcterms:isPartOf
+|Beskrivelse | Katalogens navn: «Norske epitafier 1550–1700». Skjult i fremviser, ment for visning i trefflister i Oria.
+|PNX | `Display/ispartof`
+|===
+
+=== Kilde
 [cols="35s,65", stripes=odd]
 |===
 |URI | dcterms:source
-|Beskrivelse | Standardtekst som går igjen på alle epitafiene. Eksempel: ..
+|Beskrivelse | Standardtekst som går igjen på alle epitafiene.
 |PNX | `Display/source`?
 |===
 
@@ -172,16 +197,22 @@ Opprett en konfigurasjonsfil:
 
 og legg nøkler for Alma og S3 her.
 
-=== Konvertere
+=== 1. Konvertering og import til Alma Digital
 
-For å konvertere poster fra lokalt XML-format til Dublin Core:
+For å konvertere poster fra lokalt XML-format til Dublin Core og importere til Alma Digital:
 
-	poetry run python -m scripts.process
+	poetry run python -m scripts.push_to_alma
 
-=== Synkronisere ID-er
+=== 2. Eksport av ID-er fra Alma Digital
 
-Når postene har blitt importert i Alma bør man hente ned ID-ene som har blitt generert for postene:
+Når postene har blitt importert i Alma, kan en hente ned ID-ene som har blitt generert for postene:
 
 	poetry run python -m scripts.fetch_ids
 
-Disse lagres i fila `alma_ids.json`.
+Disse lagres i fila `collection.json`.
+
+=== 3. Generere kart og listevisning
+
+For å generere kart og listevisning:
+
+	poetry run python -m scripts.generate_viewer
