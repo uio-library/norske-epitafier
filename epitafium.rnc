@@ -5,6 +5,7 @@ element epitafium {
   & element stift { text }
   & element referanse { text }?
   & element beskrivelse { text }?
+  & element biografi { text }?
   & element merknader { text }?
   & element skaper { text }?
 
