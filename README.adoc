@@ -1,13 +1,12 @@
 = Norske epitafier 1537–1700
 
-Dette repoet inneholder katalogdata for «Norske epitafier 1537–1700» som XML-filer,
-samt script for å konvertere postene til Dublin Core og laste dem opp til Alma Digital.
+Dette repoet inneholder script for konvertering og presentasjon av katalogen «Norske epitafier 1537–1700».
+Selve kildedataene finnes på https://ub-media.uio.no/norske-epitafier-1537-1700/kildedata-kopi/ og vil etterhvert bli arkivert.
 
-Hver katalogpost har en mappe med navn tilsvarende postens katalogkode,
-som består av stiftsnavn og et løpenummer, f.eks. "bergen-01".
-Hver mappe inneholder en `metadata.xml`-fil og én eller flere bildefiler.
+Katalogen omfatter 164 epitafier, der hvert epitafium er tilordnet en katalogkode bestående av stiftsnavn og et løpenummer, f.eks. «bergen-01».
+Katalogkoden er brukt som navn på en mappe som inneholder en `metadata.xml`-fil og én eller flere bildefiler:
 
-		src/
+		kildedata-kopi/
 				bergen-01/
 						metadata.xml
 						bilde 1.jpg
@@ -15,22 +14,20 @@ Hver mappe inneholder en `metadata.xml`-fil og én eller flere bildefiler.
 						biografi.jpg
 				...
 
-XML-filene følger skjemaet definert i `epitafium.rnc` ([RELAX NG Compact](https://relaxng.org/compact-20021121.html)).
+XML-filene følger det lokale https://relaxng.org/compact-20021121.html[RELAX NG Compact]-skjemaet definert i link:conversion/epitafium.rnc[epitafium.rnc].
 
-For import til Alma, konverteres filene til ved hjelp av XSLT-filen `scripts/dc_record.xsl` til en Dublin Core applikasjonsprofil
-definert i Alma (http://alma.exlibrisgroup.com/dc/47BIBSYS_UBO). Denne er i liten grad kompatibel med andre skjemaer,
-og blander dessuten inn presentasjonselementer, så den er mest en pragmatisk løsning for å få dataene inn i Alma Digital.
+
+For import til Alma, konverteres filene ved hjelp av XSLT-filen link:conversion/scripts/dc_record.xsl[dc_record.xsl] til en Dublin Core applikasjonsprofil definert i Alma (http://alma.exlibrisgroup.com/dc/47BIBSYS_UBO).
+Denne er i liten grad kompatibel med andre skjemaer, og blander dessuten inn presentasjonselementer, så den er mest en pragmatisk løsning for å få dataene inn i Alma Digital på, men har gitt oss noen erfaringer med hvordan det er å jobbe med DC-applikasjonsprofiler i Alma, og har også åpnet for å kunne tilgjengeliggjøre katalogen i Oria.
 
 == Dataelementer
 
-Definisjon av felter som brukes i XML-versjonen av katalogen, og hvilke felter disse skal korrespondere med i DC application profile 1 i UBOs katalog.
+Under følger definisjon av feltene som brukes i katalogen, samt hvilke felter de er mappet til i DC application profile 1 i Alma og PNX (Oria).
+Feltene i Alma Digital er satt opp under `Alma Configuration > Resources > Cataloging > Metadata Configuration > DC application profile 1`.
 
-Feltene i Alma Digital konfigureres i ExLibris Alma under `Alma Configuration > Resources > Cataloging > Metadata Configuration > DC application profile 1`
+Språkvalg for skjemaet: engelske felt/egenskaper og norske etiketter/labels. [utviklingsønske: etiketter på flere språk]
 
-Språkvalg for skjemaet:
-engelske felt/egenskaper og norske etiketter/labels. [utviklingsønske: etiketter på flere språk]
-
-Felter som er i bruk for denne samlingen (pr 23.04.2020):
+Felter som er i bruk for denne samlingen (pr 5.10.2020):
 
 === Tittel
 [cols="35s,65", stripes=odd]
@@ -182,13 +179,13 @@ Felter som er i bruk for denne samlingen (pr 23.04.2020):
 |===
 
 
-
-== Konvertering
+== Konverteringsprosessen
 
 === Oppsett
 
 Hent inn avhengigheter med poetry:
 
+	cd conversion
 	poetry install
 
 Opprett en konfigurasjonsfil:
@@ -196,6 +193,7 @@ Opprett en konfigurasjonsfil:
 	cp config.yml.dist config.yml
 
 og legg nøkler for Alma og S3 her.
+Her legges også stien til kildemappen.
 
 === 1. Konvertering og import til Alma Digital
 
@@ -209,10 +207,32 @@ Når postene har blitt importert i Alma, kan en hente ned ID-ene som har blitt g
 
 	poetry run python -m scripts.fetch_ids
 
-Disse lagres i fila `collection.json`.
+Disse lagres i fila `collection.json`, og vi trenger den for å kunne lenke til postene fra kart og listevisning.
 
 === 3. Generere kart og listevisning
 
-For å generere kart og listevisning:
+For å trekke ut koordinater og generere GeoJSON for kartlaget:
 
-	poetry run python -m scripts.generate_viewer
+	poetry run python -m scripts.make_map_data
+
+Dette havner i fila `kart_data.json`.
+
+=== 4. Generere bildefliser og miniatyrbilder for fremviseren
+
+Inntil et par problemer med Alma Digital har blitt fikset, lager vi fliser og miniatyrbilder selv med vips:
+
+	poetry run python -m scripts.make_tiles
+	poetry run python -m scripts.make_thumbs
+
+Disse havner i mappa "tiles".
+
+=== 5. Bygge fremviser
+
+		cd ../popcorn-viewer
+		npm run build
+
+=== 6. Deploy
+
+Nå skal `dist`-mappa være full av filer, som kan overføres til ønsket sted:
+
+		rsync -rtWz dist/ ub-media:/www/htdocs/norske-epitafier-1537-1700/

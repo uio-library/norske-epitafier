@@ -26,9 +26,9 @@
 
       <dc:date><xsl:value-of select="py:singleline(datering)"/></dc:date>
 
-      <dc:title xml:lang="nob">Norske epitafier 1537–1700: <xsl:value-of select="py:singleline(avbildet)"/> (<xsl:value-of select="opprinnelig_plassering/navn"/>)</dc:title>
+      <dc:title xml:lang="nob"><xsl:value-of select="py:singleline(avbildet)"/> (<xsl:value-of select="opprinnelig_plassering/navn"/>)</dc:title>
 
-      <dc:isPartOf xml:lang="nob">Norske epitafier 1537–1700</dc:isPartOf>
+      <dcterms:isPartOf xml:lang="nob">Norske epitafier 1537–1700</dcterms:isPartOf>
 
       <dcterms:description xml:lang="nob"><xsl:value-of select="py:tohtml(beskrivelse)"/></dcterms:description>
 
@@ -47,18 +47,21 @@
         </dcterms:bibliographicCitation>
       </xsl:for-each>
 
-      <dc:source xml:lang="nob">&lt;a href=&quot;https://www-adm.tf.uio.no/forskning/forskergrupper/protestantisme/norske-epitafier-1537-1700/&quot;&gt;Norske epitafier 1537–1700&lt;/a&gt;. Dokumentasjon av epitafier i Norge, gjennomført som del av to forskningsprosjekter ved Det teologiske fakultet, UiO.</dc:source>
+      <dc:source xml:lang="nob">&lt;a href=&quot;https://tf.uio.no/forskning/forskergrupper/protestantisme/norske-epitafier-1537-1700/&quot;&gt;Norske epitafier 1537–1700&lt;/a&gt;. Dokumentasjon av epitafier i Norge, gjennomført som del av to forskningsprosjekter ved Det teologiske fakultet, UiO.</dc:source>
 
-      <dc:rights xml:lang="nob">&lt;p&gt;Se initialer bak hver tekst.&lt;/p&gt;
-        &lt;p&gt;Kreditering for bilder:
+      <dc:rights xml:lang="nob">&lt;p&gt;Se initialer bak hver tekst. Kreditering for bilder:
         <xsl:for-each select="fil">
-          <xsl:value-of select="filnavn"/>: <xsl:value-of select="kreditering"/> (<xsl:value-of select="lisens"/>)&lt;br&gt;
+          <xsl:if test="not(contains(filnavn, '.pdf'))">
+            <xsl:value-of select="filnavn"/>: <xsl:value-of select="kreditering"/> (<xsl:value-of select="lisens"/>)&lt;br&gt;
+          </xsl:if>
         </xsl:for-each>
         &lt;/p&gt;
       </dc:rights>
 
       <xsl:for-each select="fil">
-        <dc:identifier>file://<xsl:value-of select="filnavn"/></dc:identifier>
+        <xsl:if test="filnavn != '' and not(contains(filnavn, '.pdf'))">
+          <dc:identifier>file://<xsl:value-of select="filnavn"/></dc:identifier>
+        </xsl:if>
       </xsl:for-each>
 
       <dc:identifier><xsl:value-of select="katalognummer"/></dc:identifier>

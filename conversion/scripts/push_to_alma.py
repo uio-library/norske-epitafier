@@ -6,7 +6,9 @@ from lxml.etree import tostring, Element
 
 import boto3
 from lxml.etree import cleanup_namespaces
-from scripts.modules.processor import get_filenames_from_xml, convert_record
+
+from .modules.processor import get_filenames_from_xml, convert_record
+from .modules.util import list_source_records
 from .modules.settings import Settings, settings
 from .modules.alma import AlmaApi
 
@@ -23,8 +25,7 @@ def make_dc_xml(settings: Settings, record_dirs: List[Path]) -> Path:
     for record_dir in record_dirs:
         collection.append(convert_record(
             str(Path(record_dir, 'metadata.xml')),
-            settings.xsl_file,
-            settings.alma_ids_file
+            settings.xsl_file
         ))
 
     dist_file = Path(settings.dist_dir, settings.dc_xml_file)
@@ -76,7 +77,7 @@ def run_alma_import_job(settings, import_name):
     print(job_result)
 
 
-def main(settings, filter = None):
+def push_to_alma(settings, filter = None):
 
     # List records dirs
     record_dirs = list_source_records(Path(settings.src_dir))
@@ -90,9 +91,9 @@ def main(settings, filter = None):
 
     # Add images files to upload queue
     for record_dir in record_dirs:
-        print('<<< DIR: %s >>>' % record_dir)
+        # print('<<< DIR: %s >>>' % record_dir)
         for path in get_filenames_from_xml(Path(record_dir, 'metadata.xml')):
-            print('Add: %s' % path)
+            # print('Add: %s' % path)
             upload_queue.append(path)
 
     # Confirm upload
@@ -113,11 +114,13 @@ def main(settings, filter = None):
 
 if __name__ == '__main__':
     record_ids = [
-        'oslo-christiania06',
-        'oslo-christiania04',
-        'stavanger22',
-        'trondhjem06',
-        'bergen05',
-        'ukjent01',
+        'bergen-12',
+        # 'kristiania-06',
+        # 'kristiania-04',
+        # 'stavanger-22',
+        # 'trondheim-06',
+        # 'bergen-05',
+        # 'ukjent-01',
     ]
-    main(settings)  #, filter=lambda x: x.name in record_ids)
+    # main(settings)  #, filter=lambda x: x.name in record_ids)
+    push_to_alma(settings)  #, filter=lambda x: x.name in record_ids)
