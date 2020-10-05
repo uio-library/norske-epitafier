@@ -1,12 +1,22 @@
+collection_name: 'Norske epitafier 1537–1700'
+
 src_dir: /example/path/to/epitafier
-dist_dir: dist
+dist_dir: ../dist
 dc_xml_file: dc.xml
 xsl_file: scripts/dc_record.xsl
-alma_ids_file: alma_ids.json
 default_namespace: http://alma.exlibrisgroup.com/dc/47BIBSYS_UBO
 alma_api_base_url: https://api-eu.hosted.exlibrisgroup.com/almaws/v1/
 alma_import_profile: 9339796690002204
 alma_collection: 81245890190002204
+link_template: 'https://bibsys-k.alma.exlibrisgroup.com/view/UniversalViewer/47BIBSYS_UBO/{representation_id}'
+thumbnail_template: 'https://bibsys.alma.exlibrisgroup.com/view/delivery/thumbnail/47BIBSYS_UBO/{mms_id}'
+vips_path: 'vips'
+vipsthumbnail_path: 'vipsthumbnail'
+iiif_id: 'https://ub-media.uio.no/norske-epitafier-1537-1700'
+
+# Fremtidig bruk
+alma_set: 11609186830002204
+
 alma_s3_bucket: eu-st01.ext.exlibrisgroup.com
 alma_s3_folder: 47BIBSYS_UBO
 

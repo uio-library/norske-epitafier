@@ -1,0 +1,3 @@
+[submodule "popcorn-viewer/static/openseadragon-flat-toolbar-icons"]
+	path = popcorn-viewer/static/openseadragon-flat-toolbar-icons
+	url = https://github.com/peterthomet/openseadragon-flat-toolbar-icons.git

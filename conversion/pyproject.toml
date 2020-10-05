@@ -2,7 +2,7 @@
 name = "norske-epitafier"
 version = "0.1.0"
 description = ""
-authors = ["Dan Michael O. Heggø <danmichaelo@gmail.com>"]
+authors = ["Dan Michael O. Heggø <d.m.heggo@ub.uio.no>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
