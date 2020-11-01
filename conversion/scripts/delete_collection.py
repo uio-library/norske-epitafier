@@ -1,12 +1,12 @@
-# Usage: poetry run python run scripts.delete_collection
+# Usage: poetry run python -m scripts.delete_collection
 #
 # This scripts deletes all representations from a given collection.
 # ! Use with caution !
 #
 # Usage:
 #
-# An ALMA API key with write access to Bibs must be provided as an
-# environment variable ALMA_KEY.
+# An Alma API key with write access to Bibs must be provided in config.yml
+
 import json
 import time
 
@@ -23,7 +23,10 @@ def purge_collection(collection_id):
         settings.alma_api_base_url,
         settings.alma_api_key,
     )
-    for mms_id in alma.find_records('alma.mms_memberOfDeep = "%s"' % collection_id):
+    print('Fetching IDs')
+    all_ids = [mms_id for mms_id in alma.find_records('alma.mms_memberOfDeep = "%s"' % collection_id)]
+    print('Deleting')
+    for mms_id in all_ids:
         bib = alma.get_bib(mms_id)
         print(mms_id, bib['title'])
         for rep in bib['representations']:

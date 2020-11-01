@@ -1,4 +1,4 @@
-# Usage: poetry run python run scripts.extract_coords
+# Usage: poetry run python -m scripts.extract_coords
 import json
 from pathlib import Path
 from typing import Optional

@@ -1,4 +1,4 @@
-# Usage: poetry run python run scripts.fetch_ids
+# Usage: poetry run python -m scripts.fetch_ids
 #
 # This scripts adds Alma MMS id and Alma Digital Representation ID to records
 # that do not have these. The records are matched based on the local 'id' that
@@ -7,8 +7,8 @@
 #
 # Usage:
 #
-# An ALMA API key with read access to Bibs must be provided as an
-# environment variable ALMA_KEY.
+# An Alma API key with read access to Bibs must be provided in config.yml
+
 import json
 import time
 from pathlib import Path
@@ -73,12 +73,28 @@ def fetch_ids(settings):
         catalogue_code = xml.find('catalogCode').text
         print(mms_id, catalogue_code, bib['title'])
 
+        if len(bib['representations']) == 0:
+            print("------------------------------------------------------------")
+            print("ERR: 0 representations found for MMS ID %s" % mms_id )
+            print("------------------------------------------------------------")
+            continue
+        elif len(bib['representations']) > 1:
+            print("------------------------------------------------------------")
+            print("ERR: > 1 representations found for MMS ID %s" % mms_id )
+            print("------------------------------------------------------------")
+            continue
+
         item = {
             'catalogue_code': catalogue_code,
             'title': bib['title'],
             'mms_id': mms_id,
             'representation_id': bib['representations'][0]['id'],
+            'record': {}
         }
+        for child in xml:
+            if child.text is not None:
+                key = child.tag.replace('{http://purl.org/dc/elements/1.1/}', '')
+                item['record'][key] = child.text
         item['thumbnail'] = settings.thumbnail_template.format(**item)
         item['link'] = settings.link_template.format(**item)
         collection['members'].append(item)

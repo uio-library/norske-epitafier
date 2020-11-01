@@ -13,4 +13,10 @@ $id = preg_replace('/[^0-9]/', '', $_GET['id']);
 
 $url = "https://bibsys-k.userservices.exlibrisgroup.com/view/iiif/presentation/${id}/manifest";
 
-echo file_get_contents($url);
+$data = file_get_contents($url);
+
+if (!$data) {
+  http_response_code(404);
+} else {
+  echo $data;
+}

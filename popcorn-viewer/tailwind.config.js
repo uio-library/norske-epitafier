@@ -1,8 +1,13 @@
 module.exports = {
-  purge: [
-    './src/**/*.html',
-    './src/**/*.vue',
-  ],
+  future: {
+    purgeLayersByDefault: true,
+  },
+  purge: {
+    content: [
+      './src/**/*.html',
+      './src/**/*.vue',  
+    ],
+  },
   theme: {
     extend: {},
   },

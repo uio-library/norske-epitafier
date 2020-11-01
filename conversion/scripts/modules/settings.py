@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 
 import yaml
-
+import os
 from .util import require_existence
 
 
@@ -32,6 +32,7 @@ class Settings:
 with open('config.yml') as fp:
     conf = yaml.safe_load(fp)
 
+conf['alma_api_key'] = os.getenv('ALMA_KEY', conf['alma_api_key'])
 settings = Settings(**conf)
 
 require_existence(settings.src_dir, 'dir')

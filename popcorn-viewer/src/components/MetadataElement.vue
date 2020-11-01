@@ -1,6 +1,6 @@
 <template>
-  <div class="my-3">
-    <div class="metadataHeader">{{ label }}:</div>
+  <div class="metadataBlock my-3">
+    <div class="metadataHeader">{{ label }}</div>
     <div 
       class="metadataValue"
     >
@@ -47,7 +47,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .fade {
     position: relative;
@@ -84,6 +84,16 @@ export default {
   }
   .readMore {
     display: none;
+  }
+  .metadataHeader {
+    font-size: 140%;
+  }
+  .metadataHeader, .metadataValue {
+    color: black;
+  }
+  .metadataBlock {
+    page-break-inside: avoid;
+    margin-bottom: 16px;
   }
 }
 </style>

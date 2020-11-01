@@ -1,4 +1,4 @@
-# Usage: poetry run python run scripts.make_tiles
+# Usage: poetry run python -m scripts.make_tiles
 import uuid
 from pathlib import Path
 from typing import List

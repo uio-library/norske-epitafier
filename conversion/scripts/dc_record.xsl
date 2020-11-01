@@ -18,9 +18,9 @@
 
       <diocese xml:lang="nob"><xsl:value-of select="py:singleline(stift)"/></diocese>
 
-      <originalLocation xml:lang="nob"><xsl:value-of select="py:singleline(opprinnelig_plassering/navn)"/></originalLocation>
+      <originalLocation xml:lang="nob"><xsl:value-of select="py:singleline(opprinnelig_plassering/navn)"/><xsl:if test="opprinnelig_plassering/wikidata_id != ''"> (&lt;a href=&quot;https://ub-media.uio.no/norske-epitafier-1537-1700/#/kart?id=<xsl:value-of select="py:singleline(opprinnelig_plassering/wikidata_id)"/>&quot;&gt;Vis på kart&lt;/a&gt;)</xsl:if></originalLocation>
 
-      <location xml:lang="nob"><xsl:value-of select="py:singleline(plassering/navn)"/></location>
+      <location xml:lang="nob"><xsl:value-of select="py:singleline(plassering/navn)"/><xsl:if test="plassering/wikidata_id != ''"> (&lt;a href=&quot;https://ub-media.uio.no/norske-epitafier-1537-1700/#/kart?id=<xsl:value-of select="py:singleline(plassering/wikidata_id)"/>&quot;&gt;Vis på kart&lt;/a&gt;)</xsl:if></location>
 
       <artist xml:lang="nob"><xsl:value-of select="py:singleline(skaper)"/></artist>
 

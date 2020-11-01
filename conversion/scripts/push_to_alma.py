@@ -1,4 +1,4 @@
-# Usage: poetry run python run scripts.process
+# Usage: poetry run python -m scripts.push_to_alma
 import uuid
 from pathlib import Path
 from typing import List
@@ -77,7 +77,7 @@ def run_alma_import_job(settings, import_name):
     print(job_result)
 
 
-def push_to_alma(settings, filter = None):
+def push_to_alma(settings, filter=None, include_images=True):
 
     # List records dirs
     record_dirs = list_source_records(Path(settings.src_dir))
@@ -90,11 +90,12 @@ def push_to_alma(settings, filter = None):
     upload_queue = [make_dc_xml(settings, record_dirs)]
 
     # Add images files to upload queue
-    for record_dir in record_dirs:
-        # print('<<< DIR: %s >>>' % record_dir)
-        for path in get_filenames_from_xml(Path(record_dir, 'metadata.xml')):
-            # print('Add: %s' % path)
-            upload_queue.append(path)
+    if include_images:
+        for record_dir in record_dirs:
+            # print('<<< DIR: %s >>>' % record_dir)
+            for path in get_filenames_from_xml(Path(record_dir, 'metadata.xml')):
+                # print('Add: %s' % path)
+                upload_queue.append(path)
 
     # Confirm upload
     print('Upload queue: %d' % len(upload_queue))
@@ -123,4 +124,4 @@ if __name__ == '__main__':
         # 'ukjent-01',
     ]
     # main(settings)  #, filter=lambda x: x.name in record_ids)
-    push_to_alma(settings)  #, filter=lambda x: x.name in record_ids)
+    push_to_alma(settings, include_images=True)  #, filter=lambda x: x.name in record_ids)
