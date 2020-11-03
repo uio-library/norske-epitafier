@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import CollectionView from './components/CollectionView'
 import ManifestView from './components/ManifestView'
-import Map from './components/Map'
+import MapView from './components/MapView'
 import NavBar from './components/NavBar'
 import './css/app.pcss'
 
@@ -17,7 +17,7 @@ const routes = [
   },
   {
     path: '/kart',
-    component: Map,
+    component: MapView,
   },
   {
     path: '/:id', 

@@ -16,7 +16,7 @@
       <!-- left column -->
       <div 
         v-if="canvases.length > 1"
-        class="column-1 dont-print h-full overflow-auto bg-gray-900"
+        class="column-1 dont-print h-full-except-mobile overflow-auto bg-gray-900"
       >
         <simplebar class="h-full" data-simplebar-auto-hide="false">
           <button
@@ -161,6 +161,9 @@ export default {
     },
   },
   mounted() {
+    document.body.parentNode.classList.add('h-full-except-mobile')
+    document.body.classList.add('h-full-except-mobile')
+
     this.error = null
     this.loading = true
     manifestService.loadManifest(this.$route.params.id)
@@ -188,6 +191,8 @@ export default {
       })
   },
   beforeDestroy() {
+    document.body.parentNode.classList.remove('h-full')
+    document.body.classList.remove('h-full')
     if (this.split) this.split.destroy()
 
     manifestService.loadManifest(null)
