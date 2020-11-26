@@ -1,4 +1,4 @@
-# Usage: poetry run python -m scripts.delete_collection
+# Usage: poetry run python -m scripts.delete_alma_collection
 #
 # This scripts deletes all representations from a given collection.
 # ! Use with caution !

@@ -236,3 +236,20 @@ Disse havner i mappa "tiles".
 Nå skal `dist`-mappa være full av filer, som kan overføres til ønsket sted:
 
 		rsync -rtWz dist/ ub-media:/www/htdocs/norske-epitafier-1537-1700/
+
+
+== Oppdatering av samlingen i Alma
+
+Ta først en sikkerhetskopi av kildedataene:
+
+		rsync -rtWz --progress ~/Dropbox/katalog\ -\ arbeidsmappe/epitafier/ ub-media:/www/htdocs/norske-epitafier-1537-1700/kildedata-kopi/
+
+Det er ikke mulig å sette opp overskriving av filer når en bruker [Alma Ingest API-et](https://developers.exlibrisgroup.com/alma/integrations/digital/almadigital/ingest/).
+Oppdatering av samlingen innebærer derfor at samlingen blir slettet og gjenopprettet, noe som tar > 30 minutter.
+Kan utføres i en éngangsoperasjon med dette scriptet, som også genererer bildefliser og kartdata:
+
+		./update_collection.sh
+
+Fulgt av opplasting til ønsket destinasjon:
+
+		rsync -rtWz --progress dist/ ub-media:/www/htdocs/norske-epitafier-1537-1700/

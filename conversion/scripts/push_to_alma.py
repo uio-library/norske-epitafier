@@ -99,12 +99,12 @@ def push_to_alma(settings, filter=None, include_images=True):
 
     # Confirm upload
     print('Upload queue: %d' % len(upload_queue))
-    while True:
-        confirm = input('Continue with upload? [Y|n] ').lower()
-        if confirm == 'n':
-            return
-        if confirm in ('', 'y'):
-            break
+    # while True:
+    #     confirm = input('Continue with upload? [Y|n] ').lower()
+    #     if confirm == 'n':
+    #         return
+    #     if confirm in ('', 'y'):
+    #         break
 
     # Upload to S3
     import_name = upload_to_s3(settings, upload_queue)
